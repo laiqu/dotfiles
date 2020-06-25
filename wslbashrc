@@ -1,0 +1,5 @@
+# Couldn't find a way to find host machine local address.
+# Suggestion to use /etc/resolv.conf didn't work out.
+export DISPLAY=192.168.86.45:0       
+export PULSE_SERVER=tcp:192.168.86.45
+
