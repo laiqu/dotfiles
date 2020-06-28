@@ -36,7 +36,8 @@ bindsym $mod+Return exec terminator
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show run -m -2
+bindsym $mod+d exec rofi -show run -m -2 -width 800
+bindsym $mod+w exec rofi -show window -m -2 -width 800
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
