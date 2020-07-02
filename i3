@@ -54,6 +54,11 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+bindsym $mod+s layout stacking
+bindsym $mod+e layout toggle split
+bindsym $mod+v split v
+bindsym $mod+b split h
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
@@ -98,5 +103,8 @@ exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id feh --bg-center ~/wallpaper.jpg
 
 bar {
+  position top
   status_command i3status
 }
+#exec_always --no-startup-id pkill polybar
+#exec_always --no-startup-id ~/.config/polybar/launch.sh
