@@ -45,6 +45,7 @@ vim.o.termguicolors = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.colorcolumn = "80"
+vim.api.nvim_set_keymap('v', '<C-C>', '"+y', { noremap = true, silent = true })
 
 -- Telescope
 local builtin = require('telescope.builtin')
@@ -57,6 +58,8 @@ require('telescope').setup({
     defaults = {
         file_ignore_patterns = {
             "node_modules",
+            "build",
+            "target",
             ".git",
             ".cache",
             ".venv",
@@ -98,6 +101,14 @@ require('mason-lspconfig').setup({
   },
 })
 
+local cmp = require('cmp')
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ["<Right>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
+  }),
+});
+
 
 lsp_zero.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
@@ -112,4 +123,5 @@ lsp_zero.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+  vim.keymap.set("n", "<leader>F", vim.lsp.buf.format)
 end)
