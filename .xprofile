@@ -1,0 +1,8 @@
+#!/bin/bash
+sleep 10 && redshift -PO 3800 &
+sleep 10 && touchegg &
+sleep 10 && picom &
+sleep 1 && xinput set-prop "SYNA3298:00 06CB:CD4F Touchpad" "libinput Tapping Enabled" 1
+sleep 1 && xinput set-prop "SYNA3298:00 06CB:CD4F Touchpad" "libinput Natural Scrolling Enabled" 1
+sleep 1 && xinput set-prop "SYNA3298:00 06CB:CD4F Touchpad" "libinput Accel Speed" "0.35"
+sleep 1 && while true; do for w in `ls ~/dotfiles/wallpapers/*jpg`; do feh --bg-scale $w; sleep 3; done done &
