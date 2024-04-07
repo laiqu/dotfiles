@@ -31,6 +31,24 @@ require("lazy").setup({
   }},
   "github/copilot.vim",
   'rose-pine/neovim',
+  'NLKNguyen/papercolor-theme',
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  }
 })
 
 vim.o.number = true
@@ -44,8 +62,33 @@ vim.o.cursorline = true
 vim.o.termguicolors = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.colorcolumn = "80"
+vim.o.colorcolumn = "120"
+vim.opt.swapfile = false
 vim.api.nvim_set_keymap('v', '<C-C>', '"+y', { noremap = true, silent = true })
+
+-- timestamp thing
+-- Function to convert timestamp to human-readable date
+function timestamp_to_date()
+    -- Get the word under the cursor, assuming it's a timestamp
+    local timestamp_str = vim.fn.expand("<cword>")
+    local timestamp = tonumber(timestamp_str)
+
+    -- Check if the timestamp is in milliseconds and convert it to seconds
+    if string.len(timestamp_str) == 13 then
+        timestamp = timestamp / 1000
+    end
+
+    -- Use os.date to convert the timestamp to a human-readable format
+    -- You can adjust the format string as per your requirements
+    local date_str = os.date("%Y-%m-%d %H:%M:%S", timestamp)
+
+    -- Display the date string as a message
+    vim.api.nvim_echo({{date_str, "None"}}, false, {})
+end
+
+-- Command to call the function
+vim.cmd("command! ShowDateHint lua timestamp_to_date()")
+vim.keymap.set("n", "<leader>d", ":ShowDateHint<CR>", {})
 
 -- Telescope
 local builtin = require('telescope.builtin')
@@ -77,7 +120,14 @@ require('telescope').setup({
 require('rose-pine').setup({
     disable_background = true
 })
-vim.cmd.colorscheme('rose-pine')
+vim.cmd.colorscheme('PaperColor')
+vim.keymap.set("n", "<leader>L", function()
+  if vim.o.background == 'dark' then
+      vim.o.background = 'light'
+  else
+      vim.o.background = 'dark'
+  end
+end)
 
 
 -- Lsp
